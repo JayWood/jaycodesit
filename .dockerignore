@@ -1,0 +1,4 @@
+*/*.md
+*/*.txt
+*node_modules*
+

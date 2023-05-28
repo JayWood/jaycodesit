@@ -1,0 +1,7 @@
+/vendor/
+node_modules
+/wordpress/
+/wp
+.idea
+src/*
+!src/index.php

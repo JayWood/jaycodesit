@@ -1,0 +1,12 @@
+{
+    "name": "jaywood/jaycodesit",
+    "description": "A personal website project designed with scalability in mind.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "JayWood",
+            "email": "jaycodesit@gmail.com"
+        }
+    ],
+    "require": {}
+}
