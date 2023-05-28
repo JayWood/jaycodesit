@@ -16,7 +16,6 @@ services:
       WORDPRESS_DB_NAME: exampledb
     volumes:
       - ./wp:/var/www/html
-      - ./src:/var/www/html/wp-content
 
   db:
     image: mysql:8
