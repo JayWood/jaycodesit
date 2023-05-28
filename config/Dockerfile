@@ -14,8 +14,18 @@ RUN apt update && \
 
 COPY config/php/jc.ini $PHP_INI_DIR/conf.d/
 
+RUN rm -fR /usr/src/wordpress/wp-content
+
+COPY src/ /usr/src/wordpress/wp-content
+
+COPY config/cmd.sh /usr/local/sbin
+
+RUN chmod +x /usr/local/sbin/cmd.sh
+
 # Install WP-CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     php wp-cli.phar --info&& \
     chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp \
+    mv wp-cli.phar /usr/local/bin/wp
+
+CMD ["cmd.sh"]

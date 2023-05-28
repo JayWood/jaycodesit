@@ -8,5 +8,40 @@
             "email": "jaycodesit@gmail.com"
         }
     ],
-    "require": {}
+
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*",
+                "wpackagist-theme/*"
+            ]
+        }
+    ],
+
+
+    "extra": {
+        "installer-paths": {
+            "src/mu-plugins/{$name}/": [
+                "wpackagist-plugin/akismet"
+            ],
+            "src/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "src/themes/{$name}/": [
+                "type:wordpress-theme"
+            ]
+        }
+    },
+
+    "require": {
+        "wpackagist-theme/papanek": "^1.0",
+        "wpackagist-plugin/akismet": "^5.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
