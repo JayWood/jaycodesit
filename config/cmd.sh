@@ -15,12 +15,12 @@ else
   rm -fr /var/www/html/*;
 fi
 
-echo "replacing file";
+echo "Preventing exec call from original entrypoint.";
 sed -i 's#exec "$@"##' /usr/local/bin/docker-entrypoint.sh
 
 echo "Executing built-in entrypoint";
 . /usr/local/bin/docker-entrypoint.sh "$@";
 
-echo "Okay we're here now";
+wp theme activate papanek --allow-root;
 
 exec "$@";

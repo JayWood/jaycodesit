@@ -2,5 +2,6 @@
 node_modules
 /wp
 .idea
-src/*
-!src/index.php
+
+/src/themes/papanek
+/src/mu-plugins/akismet

@@ -1,36 +1,47 @@
-name: PHP Coding Standards
+name: Docker Image Build
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  release:
+    types: [published]
 
 jobs:
-  lint:
+  build:
+    name: Build Composer
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php:
-          - '8.0'
-          - '8.1'
-        dependencies:
-          - 'locked'
-        include:
-          - php-version: '8.1'
-            composer-options: '--ignore-platform-reqs'
-
     steps:
       - uses: 'actions/checkout@v2'
       - uses: 'shivammathur/setup-php@v2'
         with:
-          php-version: '${{ matrix.php }}'
+          php-version: '8.1'
       - uses: 'ramsey/composer-install@v2'
         with:
-          dependency-versions: '${{ matrix.dependencies }}'
-          composer-options: '${{ matrix.composer-options }}'
-      - name: Lint
-        run: composer lint
-      - name: test
-        run: composer test
+          dependency-versions: 'locked'
+          composer-options: '--ignore-platform-reqs'
+  push_to_registry:
+    needs: build
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@2.1.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@4.4.0
+        with:
+          images: jaycodesit/site
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@4.0.0
+        with:
+          context: .
+          file: ./config/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
