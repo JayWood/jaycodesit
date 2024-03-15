@@ -37,7 +37,8 @@
 
     "require": {
         "wpackagist-theme/papanek": "^1.0",
-        "wpackagist-plugin/akismet": "^5.1"
+        "wpackagist-plugin/akismet": "^5.1",
+        "wpackagist-plugin/contact-form-7": "^5.9"
     },
     "config": {
         "allow-plugins": {

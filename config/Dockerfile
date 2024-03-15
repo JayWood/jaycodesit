@@ -1,4 +1,4 @@
-FROM wordpress:6.2-php8.1-apache
+FROM wordpress:6.4-php8.2-apache
 
 # APT Update/Upgrade, then install packages we need
 RUN apt update && \

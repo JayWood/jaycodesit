@@ -3,5 +3,7 @@ node_modules
 /wp
 .idea
 
-/src/themes/papanek
-/src/mu-plugins/akismet
+/src/themes/*
+/src/mu-plugins/*
+/src/plugins/*
+/src/uploads/*
