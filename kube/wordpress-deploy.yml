@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: jaycodesit-wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress
+      app: jaycodesit-wordpress
   template:
     metadata:
       labels:
-        app: wordpress
+        app: jaycodesit-wordpress
     spec:
       containers:
         - name: wordpress
@@ -19,17 +19,23 @@ spec:
             - containerPort: 80
           env:
             - name: WORDPRESS_DB_HOST
-              value: mysql-service
+              value: jaycodesit-mysql
+            - name: WORDPRESS_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: jaycodesit-mysql-secret
+                  key: mysql-user
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jaycodesit-mysql-secret
+                  key: mysql-password
             - name: WORDPRESS_DB_NAME
               value: wordpress
-            - name: WORDPRESS_DB_USER
-              value: wpuser
-            - name: WORDPRESS_DB_PASSWORD
-              value: wppassword
           volumeMounts:
-            - mountPath: /var/www/html/wp-content
-              name: wordpress-storage
+            - name: wordpress-persistent-storage
+              mountPath: /var/www/html/wp-content
       volumes:
-        - name: wordpress-storage
+        - name: wordpress-persistent-storage
           persistentVolumeClaim:
-            claimName: wordpress-pvc
+            claimName: jaycodesit-wordpress-pvc

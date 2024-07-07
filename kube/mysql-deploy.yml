@@ -1,35 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: jaycodesit-mysql
 spec:
   selector:
     matchLabels:
-      app: mysql
-  replicas: 1
+      app: jaycodesit-mysql
   template:
     metadata:
       labels:
-        app: mysql
+        app: jaycodesit-mysql
     spec:
       containers:
         - name: mysql
           image: mysql:8
-          ports:
-            - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: yourpassword
+              valueFrom:
+                secretKeyRef:
+                  name: jaycodesit-mysql-secret
+                  key: mysql-root-password
             - name: MYSQL_DATABASE
               value: wordpress
             - name: MYSQL_USER
-              value: wpuser
+              valueFrom:
+                secretKeyRef:
+                  name: jaycodesit-mysql-secret
+                  key: mysql-user
             - name: MYSQL_PASSWORD
-              value: wppassword
+              valueFrom:
+                secretKeyRef:
+                  name: jaycodesit-mysql-secret
+                  key: mysql-password
           volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: mysql-storage
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
       volumes:
-        - name: mysql-storage
+        - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pvc
+            claimName: jaycodesit-mysql-pvc
