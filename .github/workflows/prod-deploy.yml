@@ -46,7 +46,7 @@ jobs:
           --from-literal=mysql-root-password=${{ secrets.MYSQL_ROOT_PASSWORD }} \
           --from-literal=mysql-user=${{ secrets.MYSQL_USER }} \
           --from-literal=mysql-password=${{ secrets.MYSQL_PASSWORD }} \
-          --dry-run=client -o yaml | kubectl apply -f -
+          --dry-run=client -o yaml
           kubectl apply -f ./kube/
 
       - name: Update WordPress Deployment Image
