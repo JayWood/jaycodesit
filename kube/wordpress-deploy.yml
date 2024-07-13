@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: wordpress
-          image: jaycodesit/site:latest
+          image: jaycodesit/site:main
           ports:
             - containerPort: 80
           env:
