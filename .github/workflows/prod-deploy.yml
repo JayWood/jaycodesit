@@ -50,5 +50,5 @@ jobs:
           kubectl apply -f ./kube/
 
       - name: Update WordPress Deployment Image
-        run: kubectl set image deployment/wordpress wordpress=jaycodesit/site:main
+        run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:main
 
