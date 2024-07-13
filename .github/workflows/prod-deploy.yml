@@ -36,17 +36,25 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Deploy Manifests
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
-          KUBE_CONTEXT: 'microk8s'
+      - name: Create .kube directory
+        run: mkdir -p $HOME/.kube
+
+      - name: Decode base64 KUBECONFIG
+        run: echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+
+      - name: Set up kubectl
+        uses: azure/kubernetes-set-context@v1
         with:
-          args: create secret generic jaycodesit-mysql-secret \
-              --from-literal=mysql-root-password=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-              --from-literal=mysql-user=${{ secrets.MYSQL_USER }} \
-              --from-literal=mysql-password=${{ secrets.MYSQL_PASSWORD }} \
-              --dry-run=client -o yaml | kubectl apply -f ./kube/
+          kubeconfig: $HOME/.kube/config
+
+      - name: Create Kubernetes secrets and apply manifests
+        run: |
+          kubectl create secret generic jaycodesit-mysql-secret \
+          --from-literal=mysql-root-password=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          --from-literal=mysql-user=${{ secrets.MYSQL_USER }} \
+          --from-literal=mysql-password=${{ secrets.MYSQL_PASSWORD }} \
+          --dry-run=client -o yaml | kubectl apply -f -
+          kubectl apply -f ./kube/
 
       - name: Update WordPress Deployment Image
         run: kubectl set image deployment/wordpress wordpress=jaycodesit/site:main
