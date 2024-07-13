@@ -35,6 +35,13 @@ spec:
           volumeMounts:
             - name: wordpress-persistent-storage
               mountPath: /var/www/html/wp-content
+          readinessProbe:
+            httpGet:
+              path: /index.php  # Path to check on the container
+              port: 80          # Port number within the container
+            initialDelaySeconds: 10  # Wait this long before first probe
+            periodSeconds: 5         # Probe every 5 seconds
+            failureThreshold: 8       # Consider the probe failed after 8 attempts
       volumes:
         - name: wordpress-persistent-storage
           persistentVolumeClaim:
