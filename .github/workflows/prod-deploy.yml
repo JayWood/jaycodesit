@@ -53,8 +53,8 @@ jobs:
         env:
           KUBECONFIG_DATA: ${{ secrets.KUBECONFIG }}
         run: |
-          echo $KUBECONFIG_DATA | base64 --decode > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
+          echo $KUBECONFIG_DATA | base64 --decode > /home/runner/.kube/config
+          chmod 600 /home/runner/.kube/config
 
       - name: Apply Kubernetes manifests
         run: |
