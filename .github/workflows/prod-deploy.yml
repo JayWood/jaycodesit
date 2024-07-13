@@ -36,11 +36,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'v1.20.0'  # Adjust to your preferred kubectl version
-
       - name: Deploy Manifests
         uses: actions-hub/kubectl@master
         env:
