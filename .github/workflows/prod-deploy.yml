@@ -36,16 +36,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Create .kube directory
-        run: mkdir -p $HOME/.kube
-
-      - name: Decode base64 KUBECONFIG
-        run: echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
-
-      - name: Set up kubectl
-        uses: azure/kubernetes-set-context@v1
+      - uses: tale/kubectl-action@v1
         with:
-          kubeconfig: $HOME/.kube/config
+          base64-kube-config: ${{ secrets.KUBECONFIG }}
 
       - name: Create Kubernetes secrets and apply manifests
         run: |
