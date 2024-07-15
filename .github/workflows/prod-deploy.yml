@@ -40,6 +40,9 @@ jobs:
         with:
           base64-kube-config: ${{ secrets.KUBECONFIG }}
 
+      - name: Check pods maybe
+        run: kubectl get pods
+
       - name: Create Kubernetes secrets and apply manifests
         run: |
           kubectl create secret generic jaycodesit-mysql-secret \
