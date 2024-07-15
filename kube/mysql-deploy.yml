@@ -14,6 +14,8 @@ spec:
       containers:
         - name: mysql
           image: mysql:8
+          ports:
+            - containerPort: 3306  # MySQL port
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
@@ -41,6 +43,21 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
             failureThreshold: 6
+          livenessProbe:
+            exec:
+              command:
+                - "mysql"
+                - "-h"
+                - "localhost"
+                - "-u"
+                - "root"
+                - "-p$(MYSQL_ROOT_PASSWORD)"
+                - "-e"
+                - "SELECT 1;"
+            initialDelaySeconds: 30  # Wait this long before first probe
+            periodSeconds: 10         # Probe every 10 seconds
+            timeoutSeconds: 5         # Timeout for each probe
+            failureThreshold: 3       # Consider the probe failed after 3 attempts
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
