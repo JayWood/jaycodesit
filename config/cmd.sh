@@ -26,7 +26,7 @@ if wp db tables --allow-root | grep -q "wp_"; then
   echo "Database already has tables, skipping wp core install"
 else
   echo "Database is empty, running wp core install"
-  wp core install --url="${WORDPRESS_URL}" --title="${WORDPRESS_TITLE}" --admin_user="${WORDPRESS_ADMIN_USER}" --admin_password="${WORDPRESS_ADMIN_PASSWORD}" --admin_email="${WORDPRESS_ADMIN_EMAIL}" --skip-email --allow-root
+  wp core install --url="http://www.jaycodesit.com" --title="Default Title" --admin_user="admin" --admin_password="password" --admin_email="noemail@example.com" --skip-email --allow-root
 fi
 
 wp theme activate papanek --allow-root;
