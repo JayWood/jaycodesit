@@ -1,48 +1,70 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: jaycodesit-wordpress
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: jaycodesit-wordpress
-  template:
-    metadata:
-      labels:
-        app: jaycodesit-wordpress
-    spec:
-      containers:
-        - name: wordpress
-          image: jaycodesit/site:latest
-          ports:
-            - containerPort: 80
-          env:
-            - name: WORDPRESS_DB_HOST
-              value: jaycodesit-mysql
-            - name: WORDPRESS_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: jaycodesit-mysql-secret
-                  key: mysql-user
-            - name: WORDPRESS_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: jaycodesit-mysql-secret
-                  key: mysql-password
-            - name: WORDPRESS_DB_NAME
-              value: wordpress
-          volumeMounts:
-            - name: wordpress-persistent-storage
-              mountPath: /var/www/html/wp-content
-          readinessProbe:
-            httpGet:
-              path: /index.php  # Path to check on the container
-              port: 80          # Port number within the container
-            initialDelaySeconds: 10  # Wait this long before first probe
-            periodSeconds: 5         # Probe every 5 seconds
-            failureThreshold: 8       # Consider the probe failed after 8 attempts
-      volumes:
-        - name: wordpress-persistent-storage
-          persistentVolumeClaim:
-            claimName: jaycodesit-wordpress-pvc
+name: Deploy to Kubernetes
+
+on:
+  push:
+    tags:
+      - '*-release'  # Triggers on tags like 'v1.0.0-release', 'v2.1-release', etc.
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract Git tag
+        id: extract_tag
+        run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: jaycodesit/site
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          dev: no
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: .
+          file: ./config/Dockerfile
+          push: true
+          tags: |
+            jaycodesit/site:latest
+            jaycodesit/site:${{ env.GIT_TAG }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBECONFIG }}
+
+      - name: Create Kubernetes secrets and apply manifests
+        run: |
+          if ! kubectl get secret jaycodesit-mysql-secret > /dev/null 2>&1; then
+            kubectl create secret generic jaycodesit-mysql-secret \
+              --from-literal=mysql-root-password=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+              --from-literal=mysql-user=${{ secrets.MYSQL_USER }} \
+              --from-literal=mysql-password=${{ secrets.MYSQL_PASSWORD }}
+          fi
+          # Replace TAG_PLACEHOLDER with the Git tag
+          sed "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress-deploy.yml | kubectl apply -f -
+
+      - name: Update WordPress Deployment Image
+        run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:${{ env.GIT_TAG }}
