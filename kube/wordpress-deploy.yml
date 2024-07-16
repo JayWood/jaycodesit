@@ -38,19 +38,19 @@ spec:
               mountPath: /var/www/html/wp-content
           livenessProbe:
             httpGet:
-              path: /php-live
+              path: /wp-login.php
               port: 80
             initialDelaySeconds: 30
             periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /php-live
+              path: /wp-login.php
               port: 80
             initialDelaySeconds: 10
             periodSeconds: 5
           startupProbe:
             httpGet:
-              path: /php-live
+              path: /wp-login.php
               port: 80
             initialDelaySeconds: 60
             periodSeconds: 10

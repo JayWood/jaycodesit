@@ -2,9 +2,9 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# Exclude HTTPS enforcement for /php-live
+# Exclude HTTPS enforcement for requests from 10.0.0.0/24 IP range
 RewriteCond %{HTTPS} on
-RewriteCond %{REQUEST_URI} !^/php-live [NC]
+RewriteCond %{REMOTE_ADDR} ^10\.0\.0\.[0-9]{1,3}$
 RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # HTTPS enforcement for all other URLs
