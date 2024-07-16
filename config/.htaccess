@@ -2,10 +2,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# HTTPS enforcement for all other URLs
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
