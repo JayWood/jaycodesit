@@ -36,13 +36,24 @@ spec:
           volumeMounts:
             - name: wordpress-persistent-storage
               mountPath: /var/www/html/wp-content
+          livenessProbe:
+            httpGet:
+              path: /wp-login.php
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 30
           readinessProbe:
             httpGet:
-              path: /index.php  # Path to check on the container
-              port: 80          # Port number within the container
-            initialDelaySeconds: 10  # Wait this long before first probe
-            periodSeconds: 5         # Probe every 5 seconds
-            failureThreshold: 8       # Consider the probe failed after 8 attempts
+              path: /wp-login.php
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /wp-login.php
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
       volumes:
         - name: wordpress-persistent-storage
           persistentVolumeClaim:
