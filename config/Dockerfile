@@ -5,6 +5,7 @@ RUN apt update && \
     apt upgrade -y && \
     apt autoremove && \
     apt install -y \
+    less \
     vim \
     wget \
     mariadb-client
