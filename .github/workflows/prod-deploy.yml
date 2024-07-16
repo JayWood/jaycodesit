@@ -35,6 +35,11 @@ jobs:
         with:
           images: jaycodesit/site
 
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          dev: no
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.0.0
         with:
