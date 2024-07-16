@@ -10,4 +10,4 @@ spec:
   commonName: jaycodesit.com
   dnsNames:
     - jaycodesit.com
-    - www.jaycodesit.com
+    - '*.jaycodesit.com'
