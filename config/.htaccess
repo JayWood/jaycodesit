@@ -1,6 +1,13 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
+
+# Exclude HTTPS enforcement for /php-live
+RewriteCond %{HTTPS} on
+RewriteCond %{REQUEST_URI} !^/php-live [NC]
+RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# HTTPS enforcement for all other URLs
 RewriteCond %{HTTPS} !=on
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
@@ -10,7 +17,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
-
 # END WordPress
 
 # BEGIN HSTS (HTTP Strict Transport Security)
