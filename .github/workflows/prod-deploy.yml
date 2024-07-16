@@ -63,7 +63,8 @@ jobs:
               --from-literal=mysql-user=${{ secrets.MYSQL_USER }} \
               --from-literal=mysql-password=${{ secrets.MYSQL_PASSWORD }}
           fi
-          kubectl apply -f ./kube/
+          # Replace TAG_PLACEHOLDER with the Git tag
+          sed "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress-deploy.yml | kubectl apply -f -
 
       - name: Update WordPress Deployment Image
         run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:${{ env.GIT_TAG }}
