@@ -29,5 +29,8 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
+# Copy .htaccess file
+COPY config/htaccess/.htaccess /var/www/html/.htaccess
+
 ENTRYPOINT ["cmd.sh"]
 CMD ["apache2-foreground"]
