@@ -1,16 +1,14 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
-RewriteEngine On
+# BEGIN WordPress
 
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
-</IfModule>
-# END WordPress
 
-# BEGIN HSTS (HTTP Strict Transport Security)
-<IfModule mod_headers.c>
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+# END WordPress
 </IfModule>
