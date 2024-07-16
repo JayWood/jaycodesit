@@ -13,5 +13,5 @@ spec:
           cloudflare:
             email: jjwood2004@gmail.com
             apiKeySecretRef:
-              name: cloudflare-api-token
+              name: cloudflare-api-token-secret
               key: api-key
