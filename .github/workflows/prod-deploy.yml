@@ -2,8 +2,6 @@ name: Deploy to Kubernetes
 
 on:
   push:
-    branches:
-      - main
     tags:
       - '*-release'  # Triggers on tags like 'v1.0.0-release', 'v2.1-release', etc.
 
