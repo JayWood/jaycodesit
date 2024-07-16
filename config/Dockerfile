@@ -22,10 +22,10 @@ COPY src/ /usr/src/wordpress/wp-content
 COPY config/cmd.sh /usr/local/sbin
 
 # Copy custom Apache configuration file for LogLevel
-#COPY config/apache-custom.conf /etc/apache2/conf-available/
+COPY config/apache-custom.conf /etc/apache2/conf-available/
 
 # Enable the custom configuration by creating a symbolic link
-#RUN ln -s /etc/apache2/conf-available/apache-custom.conf /etc/apache2/conf-enabled/
+RUN ln -s /etc/apache2/conf-available/apache-custom.conf /etc/apache2/conf-enabled/
 
 RUN chmod +x /usr/local/sbin/cmd.sh
 
