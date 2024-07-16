@@ -18,6 +18,8 @@ spec:
           ports:
             - containerPort: 80
           env:
+            - name: WORDPRESS_URL
+              value: http://www.jaycodesit.com
             - name: WORDPRESS_DB_HOST
               value: jaycodesit-mysql
             - name: WORDPRESS_DB_USER
