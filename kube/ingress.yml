@@ -4,6 +4,7 @@ metadata:
   name: jaycodesit-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"  # Force HTTPS redirection
 spec:
   rules:
     - host: jaycodesit.com
