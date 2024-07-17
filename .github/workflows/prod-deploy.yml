@@ -41,7 +41,7 @@ jobs:
           dev: no
 
       - name: Check files
-        run: cat /usr/src/wordpress/wp-content/plugins/contact-form-7/wp-contact-form-7.php
+        run: cat src/plugins/contact-form-7/wp-contact-form-7.php
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
