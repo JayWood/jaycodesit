@@ -33,6 +33,46 @@ spec:
                   key: mysql-password
             - name: WORDPRESS_DB_NAME
               value: wordpress
+            - name: AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: AUTH_KEY
+            - name: SECURE_AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: SECURE_AUTH_KEY
+            - name: LOGGED_IN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: LOGGED_IN_KEY
+            - name: NONCE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: NONCE_KEY
+            - name: AUTH_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: AUTH_SALT
+            - name: SECURE_AUTH_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: SECURE_AUTH_SALT
+            - name: LOGGED_IN_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: LOGGED_IN_SALT
+            - name: NONCE_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: wordpress-jaycodesit-secrets
+                  key: NONCE_SALT
           volumeMounts:
             - name: wordpress-persistent-storage
               mountPath: /var/www/html/wp-content
