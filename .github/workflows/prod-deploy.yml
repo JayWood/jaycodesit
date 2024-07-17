@@ -3,7 +3,7 @@ name: Deploy to Kubernetes
 on:
   push:
     tags:
-      - '*-release'  # Triggers on tags like 'v1.0.0-release', 'v2.1-release', etc.
+      - '*-release'
 
 jobs:
   build-and-deploy:
