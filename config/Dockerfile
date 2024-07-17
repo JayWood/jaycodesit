@@ -10,9 +10,6 @@ RUN apt update && \
     wget \
     mariadb-client
 
-# Replace php.ini
-#COPY php.ini /usr/local/etc/php
-
 COPY config/php/jc.ini $PHP_INI_DIR/conf.d/
 
 RUN rm -fR /usr/src/wordpress/wp-content
