@@ -12,6 +12,6 @@ spec:
       - dns01:
           cloudflare:
             email: jjwood2004@gmail.com
-            apiKeySecretRef:
+            apiTokenSecretRef:
               name: cloudflare-api-token-secret
               key: api-key
