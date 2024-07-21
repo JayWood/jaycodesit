@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jaycodesit-wordpress-pvc
+  name: jaycodesit-wordpress-uploads-pvc
 spec:
   accessModes:
     - ReadWriteOnce
