@@ -29,6 +29,9 @@ else
   wp core install --url="http://www.jaycodesit.com" --title="Default Title" --admin_user="admin" --admin_password="password" --admin_email="noemail@example.com" --skip-email --allow-root
 fi
 
+# Make sure the right owner has wp-content uploads
+chown -fR www-data:www-data /var/www/html/wp-content/uploads
+
 wp theme activate papanek --allow-root;
 
 exec "$@";
