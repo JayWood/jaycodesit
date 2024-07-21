@@ -2,7 +2,7 @@
 node_modules
 /wp
 .idea
-
+.DS_Store
 /src/themes/*
 /src/mu-plugins/*
 /src/plugins/*

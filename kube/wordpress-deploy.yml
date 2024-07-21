@@ -74,9 +74,9 @@ spec:
                   name: wordpress-jaycodesit-secrets
                   key: NONCE_SALT
           volumeMounts:
-            - name: wordpress-persistent-storage
-              mountPath: /var/www/html/wp-content
+            - name: wordpress-uploads-storage
+              mountPath: /var/www/html/wp-content/uploads
       volumes:
-        - name: wordpress-persistent-storage
+        - name: wordpress-uploads-storage
           persistentVolumeClaim:
-            claimName: jaycodesit-wordpress-pvc
+            claimName: jaycodesit-wordpress-uploads-pvc
