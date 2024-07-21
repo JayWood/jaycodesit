@@ -60,7 +60,8 @@ jobs:
 
       - name: Apply Kube Manifests
         run: |
-          sed "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress-deploy.yml | kubectl apply -f -
+          sed "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress-deploy.yml
+          kubectl apply -f ./kube/
 
       - name: Update WordPress Deployment Image
         run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:${{ env.GIT_TAG }}
