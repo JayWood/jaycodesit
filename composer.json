@@ -40,7 +40,7 @@
         "wpackagist-plugin/akismet": "^5.1",
         "wpackagist-plugin/contact-form-7": "^5.9",
         "wpackagist-plugin/maintenance": "^4.12",
-        "wpackagist-plugin/mailgun": "^2.0"
+        "wpackagist-plugin/flamingo": "^2.5"
     },
     "config": {
         "allow-plugins": {
