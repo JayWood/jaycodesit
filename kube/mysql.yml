@@ -47,3 +47,44 @@ spec:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: jaycodesit-mysql-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaycodesit-mysql
+spec:
+  selector:
+    app: jaycodesit-mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jaycodesit-mysql-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: microk8s-hostpath
+  hostPath:
+    path: /mnt/data/mysql
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jaycodesit-mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: microk8s-hostpath
