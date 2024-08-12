@@ -25,6 +25,7 @@ COPY config/backup.sh /usr/local/sbin
 
 # Ensure the command script is executable
 RUN chmod +x /usr/local/sbin/cmd.sh
+RUN chmod +x /usr/local/sbin/cmd.sh
 
 # Install WP-CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
