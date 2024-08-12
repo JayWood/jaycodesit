@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
+
 # Variables
 LOCK_FILE="/var/www/html/wp-content/backup.lock"
 WP_PATH="/var/www/html"
