@@ -73,10 +73,18 @@ spec:
                 secretKeyRef:
                   name: wordpress-jaycodesit-secrets
                   key: NONCE_SALT
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/jaycodesit-f6c85665a3fc.json # Path to service account JSON
           volumeMounts:
             - name: wordpress-uploads-storage
               mountPath: /var/www/html/wp-content/uploads
+            - name: gdrive-secret
+              mountPath: /var/secrets/google
+              readOnly: true
       volumes:
         - name: wordpress-uploads-storage
           persistentVolumeClaim:
             claimName: jaycodesit-wordpress-uploads-pvc
+        - name: gdrive-secret
+          secret:
+            secretName: gdrive-service-account # Name of the secret containing your service account JSON

@@ -3,27 +3,27 @@ FROM wordpress:6.6-php8.2-apache
 # APT Update/Upgrade, then install packages we need
 RUN apt update && \
     apt upgrade -y && \
-    apt autoremove && \
+    apt autoremove -y && \
     apt install -y \
     less \
     vim \
     wget \
-    mariadb-client
+    mariadb-client \
+    curl
 
+# Copy custom PHP configuration
 COPY config/php/jc.ini $PHP_INI_DIR/conf.d/
 
+# Clean up the default wp-content and copy the custom content
 RUN rm -fR /usr/src/wordpress/wp-content
-
 COPY src/ /usr/src/wordpress/wp-content
 
+
+# Copy custom command script
 COPY config/cmd.sh /usr/local/sbin
+COPY config/backup.sh /usr/local/sbin
 
-# Copy custom Apache configuration file for LogLevel
-#COPY config/apache-custom.conf /etc/apache2/conf-available/
-
-# Enable the custom configuration by creating a symbolic link
-#RUN ln -s /etc/apache2/conf-available/apache-custom.conf /etc/apache2/conf-enabled/
-
+# Ensure the command script is executable
 RUN chmod +x /usr/local/sbin/cmd.sh
 
 # Install WP-CLI
@@ -35,5 +35,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 # Copy .htaccess file
 COPY config/.htaccess /var/www/html/.htaccess
 
+# Set entrypoint and command
 ENTRYPOINT ["cmd.sh"]
 CMD ["apache2-foreground"]
