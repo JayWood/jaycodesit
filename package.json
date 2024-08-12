@@ -1,0 +1,19 @@
+{
+  "name": "jaycodesit",
+  "version": "1.6.1",
+  "description": "A personal project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayWood/jaycodesit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayWood/jaycodesit/issues"
+  },
+  "homepage": "https://github.com/JayWood/jaycodesit#readme"
+}
