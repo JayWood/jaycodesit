@@ -27,7 +27,7 @@ mkdir -p "$UPLOADS_DIR"
 
 # Export the database using WP CLI
 echo "Exporting database..."
-wp db export --allow-root --path="$WP_PATH" "$EXPORT_DIR/db-export.sql"
+/usr/local/sbin/wp db export --allow-root --path="$WP_PATH" "$EXPORT_DIR/db-export.sql"
 
 if [ $? -ne 0 ]; then
     echo "Database export failed!"
