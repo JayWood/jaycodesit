@@ -33,7 +33,7 @@ RUN chmod +x /usr/local/sbin/backup.sh
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     php wp-cli.phar --info && \
     chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp
+    mv wp-cli.phar /usr/local/sbin/wp
 
 # Copy .htaccess file
 COPY config/.htaccess /var/www/html/.htaccess
