@@ -9,7 +9,8 @@ RUN apt update && \
     vim \
     wget \
     mariadb-client \
-    curl
+    curl \
+    jq
 
 # Copy custom PHP configuration
 COPY config/php/jc.ini $PHP_INI_DIR/conf.d/
