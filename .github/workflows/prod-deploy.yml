@@ -55,7 +55,7 @@ jobs:
         with:
           base64-kube-config: ${{ secrets.KUBECONFIG }}
 
-      - name: `Apply Kube Manifests
+      - name: Apply Kube Manifests
         run: |
           sed -i "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress.yml
           cat ./kube/wordpress.yml  # Debugging step
