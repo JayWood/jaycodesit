@@ -55,10 +55,14 @@ jobs:
         with:
           base64-kube-config: ${{ secrets.KUBECONFIG }}
 
-      - name: Apply Kube Manifests
+      - name: `Apply Kube Manifests
         run: |
-          sed "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress.yml
-          kubectl apply -f ./kube/
+          sed -i "s/TAG_PLACEHOLDER/${{ env.GIT_TAG }}/g" ./kube/wordpress.yml
+          cat ./kube/wordpress.yml  # Debugging step
+          kubectl apply -f ./kube/`
 
       - name: Update WordPress Deployment Image
         run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:${{ env.GIT_TAG }}
+
+      - name: Update CronJob Image
+        run: kubectl set image cronjob/jaycodesit-wordpress-cron wordpress-cron=jaycodesit/site:${{ env.GIT_TAG }}
