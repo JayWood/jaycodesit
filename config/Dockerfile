@@ -38,8 +38,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 # Copy .htaccess file
 COPY config/.htaccess /var/www/html/.htaccess
 
-COPY config/cronjob /etc/cron.d/backup-cron
-
 RUN chmod 0644 /etc/cron.d/backup-cron && \
     crontab /etc/cron.d/backup-cron && \
     touch /var/log/cron.log
