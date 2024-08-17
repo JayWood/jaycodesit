@@ -34,7 +34,4 @@ chown -fR www-data:www-data /var/www/html/wp-content/uploads
 
 wp theme activate papanek --allow-root;
 
-# Start cron
-cron;
-
 exec "$@";
