@@ -1,2 +1,2 @@
 # Run the backup script every 15 minutes
-*/15 * * * * export $(xargs -0 -a "/proc/1/environ") && /usr/local/sbin/backup.sh >> /var/log/cron.log 2>&1
+*/15 * * * * /usr/local/sbin/backup.sh >> /var/log/cron.log 2>&1

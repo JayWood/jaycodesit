@@ -2,6 +2,14 @@
 
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
 
+# Read the environment variables from /proc/1/environ, replace null chars with newlines
+env_vars=$(tr '\0' '\n' < /proc/1/environ)
+
+# Export each environment variable
+while IFS= read -r var; do
+    export "$var"
+done <<< "$env_vars"
+
 # Variables
 LOCK_FILE="/var/www/html/wp-content/backup.lock"
 WP_PATH="/var/www/html"
