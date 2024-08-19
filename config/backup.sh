@@ -19,8 +19,6 @@ if [ -f "$LOCK_FILE" ]; then
     exit 1
 fi
 
-ls -talh "/var/www/html/"
-
 # Create lock file
 touch "$LOCK_FILE"
 echo "Backup started..."
