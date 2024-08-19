@@ -10,7 +10,8 @@ RUN apt update && \
     wget \
     mariadb-client \
     curl \
-    jq
+    jq \
+    cron
 
 # Copy custom PHP configuration
 COPY config/php/jc.ini $PHP_INI_DIR/conf.d/
