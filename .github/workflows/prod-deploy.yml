@@ -62,6 +62,3 @@ jobs:
 
       - name: Update WordPress Deployment Image
         run: kubectl set image deployment/jaycodesit-wordpress wordpress=jaycodesit/site:${{ env.GIT_TAG }}
-
-      - name: Update CronJob Image
-        run: kubectl set image cronjob/jaycodesit-wordpress-cron wordpress-cron=jaycodesit/site:${{ env.GIT_TAG }}

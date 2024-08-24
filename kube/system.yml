@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-custom-template
+  namespace: ingress-nginx
+data:
+  custom-log-format.conf: |
+    log_format custom '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$http_x_forwarded_proto"';
+
+    access_log /var/log/nginx/access.log custom;
+
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -92,19 +106,6 @@ spec:
           type: Utilization
           averageUtilization: 50
 
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-custom-template
-  namespace: ingress-nginx
-data:
-  custom-log-format.conf: |
-    log_format custom '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for" "$http_x_forwarded_proto"';
-
-    access_log /var/log/nginx/access.log custom;
 ---
 apiVersion: apps/v1
 kind: Deployment
