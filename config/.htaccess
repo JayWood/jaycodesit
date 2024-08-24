@@ -4,9 +4,6 @@
 
 RewriteEngine On
 
-RewriteCond %{HTTPS} !=on
-RewriteRule ^/?(.*) https://www.jaycodesit.com/$1 [R,L]
-
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
