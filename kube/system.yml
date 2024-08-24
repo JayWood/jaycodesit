@@ -44,11 +44,6 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      log_format custom '$remote_addr - $remote_user [$time_local] "$request" '
-                        '$status $body_bytes_sent "$http_referer" '
-                        '"$http_user_agent" "$http_x_forwarded_for" "$http_x_forwarded_proto"';
-      access_log /var/log/nginx/access.log custom;
 spec:
   tls:
     - hosts:
