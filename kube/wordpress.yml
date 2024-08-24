@@ -27,6 +27,8 @@ spec:
               value: "false"
             - name: WORDPRESS_DB_HOST
               value: jaycodesit-mysql
+            - name: ENABLE_HTTPS
+              value: "true"
             - name: WORDPRESS_DB_USER
               valueFrom:
                 secretKeyRef:
