@@ -117,7 +117,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx-ingress
+        app: jaycodesit-ingress
     spec:
       containers:
         - name: controller
