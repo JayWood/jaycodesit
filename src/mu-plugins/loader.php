@@ -28,7 +28,8 @@ add_action('muplugins_loaded', function() {
 	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
 		$_SERVER['HTTPS'] = 'on';
 		error_log( 'wtf' );
+	} else {
+		error_log( print_r( $_SERVER, true ) );
+		error_log( 'wtf2' );
 	}
-
-	error_log( 'wtf2' );
 } );
