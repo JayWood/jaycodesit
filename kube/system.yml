@@ -114,10 +114,13 @@ metadata:
   namespace: ingress
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: jaycodesit-ingress  # This must match template.metadata.labels
   template:
     metadata:
       labels:
-        app: jaycodesit-ingress
+        app: jaycodesit-ingress  # This must match selector.matchLabels
     spec:
       containers:
         - name: controller
