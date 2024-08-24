@@ -105,3 +105,30 @@ data:
                       '"$http_user_agent" "$http_x_forwarded_for" "$http_x_forwarded_proto"';
 
     access_log /var/log/nginx/access.log custom;
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+    spec:
+      containers:
+        - name: controller
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:latest
+          args:
+            - /nginx-ingress-controller
+            - --configmap=$(POD_NAMESPACE)/nginx-custom-template
+          volumeMounts:
+            - name: custom-log-config
+              mountPath: /etc/nginx/conf.d/custom-log-format.conf
+              subPath: custom-log-format.conf
+      volumes:
+        - name: custom-log-config
+          configMap:
+            name: nginx-custom-template
